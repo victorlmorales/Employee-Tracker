@@ -31,3 +31,48 @@ const db = mysql.createConnection(
     },
     console.log(`Connected to the employee_tracker_db database.`)
 );
+
+// Start the application
+const init = () => {
+    inquirer
+        .prompt([
+            {
+                type: "list",
+                message: "Please select from the following options:",
+                name: "initialize",
+                choices: [
+                    "View all departments",
+                    "View all roles",
+                    "View all employees",
+                    "Add a department",
+                    "Add a role",
+                    "Add an employee",
+                    "Update an employee role",
+                    "I'm finished"
+                ]
+            }
+        ]).then(ans => {
+            // CASES DEPENDING WHAT THE USER SELECTS;
+            switch (ans.initialize) {
+                case "View all departments": viewDept();
+                    break;
+                case "View all roles": viewRoles();
+                    break;
+                case "View all employees": viewEmployees();
+                    break;
+                case "Add a department": addDept();
+                    break;
+                case "Add a role": addRole();
+                    break;
+                case "Add an employee": addEmployee();
+                    break;
+                case "Update an employee role": updateEmployee();
+                    break;
+                case "I'm finished":
+                    console.log("Thank you very much!");
+                    process.exit();
+            }
+        }).catch(err => console.error(err));
+}
+
+init();
